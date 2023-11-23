@@ -50,7 +50,7 @@ exports.login = async (req, res) => {
       res.status(401).json({
         errors: {
           param: "password",
-          message: "PWが無効です",
+          message: "PWが無効です。",
         },
       });
     }

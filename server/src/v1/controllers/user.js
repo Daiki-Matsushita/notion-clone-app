@@ -35,7 +35,7 @@ exports.login = async (req, res) => {
       res.status(401).json({
         errors: {
           param: "username",
-          message: "ユーザー名が無効です",
+          message: "ユーザー名が無効です。",
         },
       });
     }

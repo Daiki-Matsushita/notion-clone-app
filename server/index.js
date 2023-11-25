@@ -1,5 +1,6 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const cors = require("cors");
 
 const PORT = 5000;
 require("dotenv").config();
@@ -7,9 +8,14 @@ require("dotenv").config();
 const app = express();
 // jsonオブジェクトとして扱う
 app.use(express.json());
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+  })
+);
 // エンドポイント（例えば新規登録のregisterなどのAPI）を呼ぶために
 // デフォルトでapi/v1/routesってつけないとダメよ
-app.use("/api/v1", require("./src/v1/routes/auth"));
+app.use("/api/v1", require("./src/v1/routes"));
 
 // DBconnection
 try {

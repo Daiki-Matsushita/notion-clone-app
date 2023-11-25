@@ -16,7 +16,7 @@ exports.register = async (req, res) => {
     const user = await User.create(req.body);
     // JWT発行
     const token = JWT.sign({ id: user._id }, process.env.TOKEN_SECRET_KEY, {
-      expiresIn: "24",
+      expiresIn: "24h",
     });
     return res.status(200).json({ user, token });
   } catch (e) {
@@ -32,11 +32,13 @@ exports.login = async (req, res) => {
     // DBからユーザが存在するか探してくる
     const user = await User.findOne({ username: username });
     if (!user) {
-      res.status(401).json({
-        errors: {
-          param: "username",
-          message: "ユーザー名が無効です。",
-        },
+      return res.status(401).json({
+        errors: [
+          {
+            path: "username",
+            msg: "ユーザー名が無効です。",
+          },
+        ],
       });
     }
 
@@ -47,11 +49,13 @@ exports.login = async (req, res) => {
     ).toString(CryptoJS.enc.Utf8); // ドキュメントを見ながら実装するべし
 
     if (decryptedPW !== password) {
-      res.status(401).json({
-        errors: {
-          param: "password",
-          message: "PWが無効です。",
-        },
+      return res.status(401).json({
+        errors: [
+          {
+            path: "password",
+            msg: "PWが無効です。",
+          },
+        ],
       });
     }
     // JWTを発行

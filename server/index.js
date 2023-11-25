@@ -32,7 +32,7 @@ app.listen(PORT, () => {
 
 //http://localhost:5000/
 app.get("/", (req, res) => {
-  res.send("Helooooooo");
+  res.send("Hello World");
 });
 
 // ユーザログイン用API
